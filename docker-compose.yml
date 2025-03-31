@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  influxdb:
+    image: influxdb:2.7
+    container_name: influxdb
+    restart: always
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=admin123
+      - DOCKER_INFLUXDB_INIT_ORG=LSCR
+      - DOCKER_INFLUXDB_INIT_BUCKET=iot_Lora
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=DVgvoNwwmep-0DTabaDY523koyvXp-Z8OlcM6I1Fpnb4denfQl4OoX2-nKHNNiNIZ2ZUKlQwEKjvGPP97LxRwA==
+
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  fastapi:
+    build: .
+    container_name: iot-api
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - INFLUX_URL=http://influxdb:8086
+      - INFLUX_TOKEN=DVgvoNwwmep-0DTabaDY523koyvXp-Z8OlcM6I1Fpnb4denfQl4OoX2-nKHNNiNIZ2ZUKlQwEKjvGPP97LxRwA==
+      - INFLUX_ORG=LSCR
+      - INFLUX_BUCKET=iot_Lora
+      - MONGO_URL=mongodb://mongodb:27017
+    depends_on:
+      - influxdb
+      - mongodb
+
+  mqtt_listener:
+    build:
+      context: .
+      dockerfile: mqtt.Dockerfile
+    container_name: mqtt-listener
+    restart: always
+    depends_on:
+      - fastapi
+    environment:
+      - API_URL=http://fastapi:8000/data
+      - MQTT_BROKER=172.16.20.3  
+volumes:
+  influxdb_data:
+  mongodb_data:
+
+
