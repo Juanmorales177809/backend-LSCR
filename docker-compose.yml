@@ -52,7 +52,7 @@ services:
       - fastapi
     environment:
       - API_URL=http://fastapi:8000/data
-      - MQTT_BROKER=172.16.20.3  
+      - MQTT_BROKER=${MQTT_BROKER}
 volumes:
   influxdb_data:
   mongodb_data:
