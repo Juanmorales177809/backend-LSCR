@@ -20,15 +20,14 @@ services:
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=DVgvoNwwmep-0DTabaDY523koyvXp-Z8OlcM6I1Fpnb4denfQl4OoX2-nKHNNiNIZ2ZUKlQwEKjvGPP97LxRwA==
 
   mongodb:
-    image: mongo:6
+    image: arm64v8/mongo:6.0
     container_name: mongodb
     restart: always
     ports:
       - "27017:27017"
     volumes:
       - /mnt/ssd/mongodb_data:/data/db
-    #volumes:
-      #- mongodb_data:/data/db
+
 
   fastapi:
     build: .
