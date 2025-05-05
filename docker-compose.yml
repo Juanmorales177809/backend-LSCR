@@ -8,7 +8,9 @@ services:
     ports:
       - "8086:8086"
     volumes:
-      - influxdb_data:/var/lib/influxdb2
+      - /mnt/ssd/influxdb_data:/var/lib/influxdb2
+    #volumes:
+      #- influxdb_data:/var/lib/influxdb2
     environment:
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=admin
@@ -24,7 +26,9 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - mongodb_data:/data/db
+      - /mnt/ssd/mongodb_data:/data/db
+    #volumes:
+      #- mongodb_data:/data/db
 
   fastapi:
     build: .
@@ -53,8 +57,6 @@ services:
     environment:
       - API_URL=http://fastapi:8000/data
       - MQTT_BROKER=${MQTT_BROKER}
-volumes:
-  influxdb_data:
-  mongodb_data:
+
 
 
