@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   influxdb:
-    image: quay.io/influxdb/influxdb:v2.0.7
+    image: influxdb:1.8-alpine
     platform: linux/arm64
     container_name: influxdb
     restart: always
