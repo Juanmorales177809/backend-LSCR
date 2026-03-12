@@ -4,10 +4,10 @@ import requests
 
 print("Hola mundo exterior")
 # Configura aquí la IP o dominio de tu servidor MQTT (el del ChirpStack Gateway Bridge)
-MQTT_BROKER = "172.16.20.3"
+MQTT_BROKER = "172.20.10.4"
 MQTT_PORT = 1883  # por defecto, puede ser 8883 si usas TLS
 MQTT_TOPIC = "application/+/device/+/event/up"
-API_URL = "http://172.16.20.7:8000/data" 
+API_URL = "http://172.20.10.4:8000/data" 
 
 # Si usas autenticación MQTT (ChirpStack puede tener usuario/contraseña)
 MQTT_USERNAME = ""   

@@ -2,8 +2,7 @@ version: '3.8'
 
 services:
   influxdb:
-    image: influxdb:1.8-alpine
-    platform: linux/arm64
+    image: influxdb:1.8
     container_name: influxdb
     restart: always
     ports:
